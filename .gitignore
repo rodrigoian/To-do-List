@@ -1,0 +1,8 @@
+.env
+*.key
+*.pem
+*.jks
+bin/
+target
+db.properties
+bin/
