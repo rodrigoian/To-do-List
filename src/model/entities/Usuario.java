@@ -1,14 +1,19 @@
 package model.entities;
 
 public class Usuario {
-private long id;
+private Long id;
 private String nome;
 private String email;
 private String senha;
 
-public Usuario() {}
+// ✅ criar novo usuário (sem id)
+public Usuario(String nome, String email, String senha) {
+    this.nome = nome;
+    this.email = email;
+    this.senha = senha;
+}
 
-public Usuario(long id, String nome, String email, String senha) {
+public Usuario(Long id, String nome, String email, String senha) {
 	this.id = id;
 	this.nome = nome;
 	this.email = email;
