@@ -1,5 +1,6 @@
 package service;
 
+import exception.SenhaInvalidaException;
 import model.dao.UsuarioDao;
 import model.entities.Usuario;
 
@@ -25,14 +26,14 @@ public class UsuarioService {
 	
 	
 	private void validarSenha(String senha) {
-		if (senha.length() < 6) {
-			throw new RuntimeException("Senha fraca, por favor que ela tenha mais de 6 digitos e pelo menos um caracter especial");
+		if (senha.length() <= 6) {
+			throw new RuntimeException("Senha deve ter pelo menos 6 digitos");
 		}
 		//se tiver pelo menos um caracter especial
 		boolean temEspecial = senha.matches(".*[^a-zA-Z0-9].*");
 		
 		if(!temEspecial) {
-			throw new RuntimeException("Senha deve ter pelo menos um caracter especial");
+			throw new SenhaInvalidaException("Senha deve ter pelo menos um caracter especial");
 		}
 		}
 		
