@@ -1,5 +1,6 @@
 package service;
 
+import exception.CampoVazioException;
 import exception.SenhaInvalidaException;
 import model.dao.UsuarioDao;
 import model.entities.Usuario;
@@ -14,7 +15,7 @@ public class UsuarioService {
 	public void cadastrar(Usuario usuario) {
 		//verifica se os campos não estão vazios
 		if(usuario.getNome().isEmpty() || usuario.getEmail().isEmpty() || usuario.getSenha().isEmpty()) {
-			throw new RuntimeException("Erro: Campos vazios");
+			throw new CampoVazioException("Erro: Campos vazios");
 		}
 		
 		validarSenha(usuario.getSenha());
@@ -26,8 +27,8 @@ public class UsuarioService {
 	
 	
 	private void validarSenha(String senha) {
-		if (senha.length() <= 6) {
-			throw new RuntimeException("Senha deve ter pelo menos 6 digitos");
+		if (senha.length() < 6) {
+			throw new SenhaInvalidaException("Senha deve ter pelo menos 6 digitos");
 		}
 		//se tiver pelo menos um caracter especial
 		boolean temEspecial = senha.matches(".*[^a-zA-Z0-9].*");

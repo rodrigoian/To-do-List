@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 
 import db.DB;
@@ -28,7 +29,8 @@ public class UsuarioDaoJDBC implements UsuarioDao{
 			st = conn.prepareStatement(
 					"INSERT INTO cadastro.usuario "
 					+ "(nome_usuario, email, senha) "
-				+ "VALUES (?,?,?)");
+				+ "VALUES (?,?,?)",
+					Statement.RETURN_GENERATED_KEYS); //precisa disso para cadastrar o id no sistema java
 			
 			st.setString(1,obj.getNome());
 			st.setString(2, obj.getEmail());
@@ -36,8 +38,10 @@ public class UsuarioDaoJDBC implements UsuarioDao{
 			
 			int rowsAffected = st.executeUpdate();
 			if (rowsAffected > 0) {
+				
 				//salva o id novo do vendedor
 				ResultSet rs = st.getGeneratedKeys();
+				
 				if(rs.next()) {
 					//pegar o valor do id gerado na posição 1, pois
 					//vai ser a primeira coluna do .getGeneratedKeys();

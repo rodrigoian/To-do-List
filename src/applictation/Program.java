@@ -17,13 +17,9 @@ public class Program {
 		UsuarioDao usuarioDao = DaoFactory.createUsuarioDao();
 		UsuarioService service = new UsuarioService(usuarioDao);
 		UsuarioController controller = new UsuarioController(service);
-		UsuarioView view = new UsuarioView(sc);
-		
-		int quantidade = view.mostrarMenu();
-		for (int i = 0; i < quantidade; i++) {
-			Usuario usuario = view.cadastrar();
-			controller.cadastrar(usuario);
-		}
+		UsuarioView view = new UsuarioView(sc,controller);
+	
+		view.cadastrar();
 		
 		
 		
