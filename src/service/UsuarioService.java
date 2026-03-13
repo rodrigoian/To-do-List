@@ -23,8 +23,6 @@ public class UsuarioService {
 
 		dao.insert(usuario);
 	}
-
-	
 	
 	private void validarSenha(String senha) {
 		if (senha.length() < 6) {

@@ -62,9 +62,25 @@ public class UsuarioDaoJDBC implements UsuarioDao{
 
 	@Override
 	public void update(Usuario obj) {
-		// TODO Auto-generated method stub
-		
-	}
+		PreparedStatement st = null;
+		try {
+			st = conn.prepareStatement(
+					"UPDATE cadastro.usuario "
+					+ "SET (nome_usuario, email, senha) "
+				+ "VALUES (?,?,?)");
+			
+			st.setString(1,obj.getNome());
+			st.setString(2, obj.getEmail());
+			st.setString(3, obj.getSenha());
+			
+		} catch(SQLException e) {
+				throw new DbException(e.getMessage());
+			}
+			finally {
+				DB.closeStatemente(st);
+			}
+		}
+
 
 	@Override
 	public void deleteById(Integer id) {
