@@ -9,6 +9,7 @@ import java.util.List;
 
 import db.DB;
 import db.DbException;
+import db.DbIntegrityException;
 import model.dao.UsuarioDao;
 import model.entities.Usuario;
 
@@ -92,13 +93,28 @@ public class UsuarioDaoJDBC implements UsuarioDao{
 
 
 	@Override
-	public void deleteById(Integer id) {
-		// TODO Auto-generated method stub
+	public void deleteById(Long id) {
+		PreparedStatement st = null;
+		try {
+			st = conn.prepareStatement(
+					"DELETE FROM CADASTRO.USUARIO "
+					+ "WHERE "
+					+ "id_usuario = ?");
+			
+			st.setLong(1,id);
+			int rowsAffected = st.executeUpdate();
+			
+			if (rowsAffected == 0) {
+				throw new DbException("Usuario não encontrado");
+			}
 		
+		} catch (SQLException e) {
+		throw new DbIntegrityException(e.getMessage());
+	}
 	}
 
 	@Override
-	public Usuario findById(Integer id) {
+	public Usuario findById(Long id) {
 		// TODO Auto-generated method stub
 		return null;
 	}

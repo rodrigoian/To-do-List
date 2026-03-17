@@ -87,9 +87,28 @@ public class UsuarioView {
 			System.out.println("❌ Erro na atualização: Tente novamente. " + e.getMessage());
 		
 		}catch(RuntimeException e) {
-			System.out.println("❌ Usuario não encontrado");
+			System.out.println("❌ Usuario não encontrado. " + e.getMessage());
 		}
 	}
+	
+	public void ApagarDoBanco() {
+		try {
+			System.out.println("Digite o Id que você deseja que seja deletado: ");
+			Long id = sc.nextLong();
+			sc.nextLine();
+		
+			controller.deletar(id);
+			System.out.println("deletado com sucesso: ");
+			
+			}catch(BusinessException e) {
+				System.out.println("❌ Erro na atualização: Tente novamente. " + e.getMessage());
+			
+			}catch(RuntimeException e) {
+				System.out.println("❌ Usuario não encontrado. " + e.getMessage());
+			}
+		
+	}
+	
 	public void menu() {
 
 	    int opcao;
@@ -98,6 +117,7 @@ public class UsuarioView {
 	        System.out.println("\n=== MENU ===");
 	        System.out.println("1 - Cadastrar usuário");
 	        System.out.println("2 - Atualizar usuário");
+	        System.out.println("3 - Deletar usuário");
 	        System.out.println("0 - Sair");
 	        System.out.print("Escolha: ");
 
@@ -113,6 +133,10 @@ public class UsuarioView {
 	            case 2:
 	                atualizarNoBanco();
 	                break;
+	                
+	            case 3:
+	                ApagarDoBanco();
+	                break;  
 
 	            case 0:
 	                System.out.println("Encerrando...");

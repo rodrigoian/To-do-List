@@ -17,4 +17,8 @@ public class UsuarioController {
 	public void atualizar(Usuario usuario) {
 		service.atualizar(usuario);
 		}
+	
+	public void deletar(Long id) {
+		service.deletar(id);
+		}
 }

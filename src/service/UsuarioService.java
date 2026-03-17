@@ -14,10 +14,7 @@ public class UsuarioService {
 	
 	public void cadastrar(Usuario usuario) {
 		//verifica se os campos não estão vazios
-		if(usuario.getNome().isEmpty() || usuario.getEmail().isEmpty() || usuario.getSenha().isEmpty()) {
-			throw new CampoVazioException("Erro: Campos vazios");
-		}
-		
+		validarCampoVazio(usuario);
 		validarSenha(usuario.getSenha());
 		
 		dao.insert(usuario);
@@ -25,16 +22,35 @@ public class UsuarioService {
 	
 	public void atualizar(Usuario usuario) {
 		//validação de campos vazios
-		if (	usuario.getId() == null || 
-		        usuario.getNome() == null || usuario.getNome().isBlank() ||
-		        usuario.getEmail() == null || usuario.getEmail().isBlank() ||
-		        usuario.getSenha() == null || usuario.getSenha().isBlank()) {
-		}
-		
+		validarCampoVazio(usuario);
 		validarSenha(usuario.getSenha());
-		
 		dao.update(usuario);
 	}
+	public void deletar(Long id) {
+		if (id == null) {
+			throw new CampoVazioException("Erro: Campos Vazios!");
+		}
+		dao.deleteById(id);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	private void validarSenha(String senha) {
@@ -48,6 +64,15 @@ public class UsuarioService {
 			throw new SenhaInvalidaException("Senha deve ter pelo menos um caracter especial");
 		}
 		}
+	
+	private void validarCampoVazio(Usuario usuario) {
+		if (usuario.getId() == null || 
+		        usuario.getNome() == null || usuario.getNome().isBlank() ||
+		        usuario.getEmail() == null || usuario.getEmail().isBlank() ||
+		        usuario.getSenha() == null || usuario.getSenha().isBlank() )
+			throw new CampoVazioException("Erro: Campos vazios");{
+		}
+	}
 	
 		
 	}

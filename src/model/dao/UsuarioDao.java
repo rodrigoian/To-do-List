@@ -8,8 +8,8 @@ public interface UsuarioDao {
 	
 	void insert(Usuario obj);
 	void update(Usuario obj);
-	void deleteById(Integer id);
-	Usuario findById(Integer id);
+	void deleteById(Long id);
+	Usuario findById(Long id);
 	List<Usuario> findAll();
 	
 
