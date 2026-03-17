@@ -20,9 +20,22 @@ public class UsuarioService {
 		
 		validarSenha(usuario.getSenha());
 		
-
 		dao.insert(usuario);
 	}
+	
+	public void atualizar(Usuario usuario) {
+		//validação de campos vazios
+		if (	usuario.getId() == null || 
+		        usuario.getNome() == null || usuario.getNome().isBlank() ||
+		        usuario.getEmail() == null || usuario.getEmail().isBlank() ||
+		        usuario.getSenha() == null || usuario.getSenha().isBlank()) {
+		}
+		
+		validarSenha(usuario.getSenha());
+		
+		dao.update(usuario);
+	}
+	
 	
 	private void validarSenha(String senha) {
 		if (senha.length() < 6) {
@@ -35,6 +48,8 @@ public class UsuarioService {
 			throw new SenhaInvalidaException("Senha deve ter pelo menos um caracter especial");
 		}
 		}
+	
 		
 	}
+	
 

@@ -3,7 +3,7 @@ package model.entities;
 import java.time.LocalDateTime;
 
 public class Tarefa {
-	private long id;
+	private Long id;
 	private String nome;
 	private String descricao;
 	private LocalDateTime data;
@@ -12,7 +12,7 @@ public class Tarefa {
 	
 	public Tarefa() {}
 	
-	public Tarefa(long id, String nome, String descricao,LocalDateTime data,String statusId, String usuarioId) {
+	public Tarefa(Long id, String nome, String descricao,LocalDateTime data,String statusId, String usuarioId) {
 		this.id = id;
 		this.nome = nome;
 		this.descricao = descricao;
@@ -21,11 +21,11 @@ public class Tarefa {
 		this.data = LocalDateTime.now();
 	}
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

@@ -4,8 +4,6 @@ import java.util.Scanner;
 
 import controller.UsuarioController;
 import exception.BusinessException;
-import exception.CampoVazioException;
-import exception.SenhaInvalidaException;
 import model.entities.Usuario;
 
 //injeção de dependencia para que todas as funçoes aceitem scanner automatico
@@ -63,6 +61,69 @@ public class UsuarioView {
 		}
 	}
   }
+	
+	public void atualizarNoBanco() {
+		try {
+		System.out.println("Digite o Id que você deseja ser atualizado: ");
+		Long id = sc.nextLong();
+		sc.nextLine();
+		
+		System.out.println("digite o nome que você deseja atualizar: ");
+		String nome = sc.nextLine();
+		
+		System.out.println("digite o email que você deseja atualizar: ");
+		String email = sc.nextLine();
+		
+		System.out.println("digite o senha que você deseja atualizar: ");
+		String senha = sc.nextLine();
+		
+		
+		Usuario usuario = new Usuario(id,nome,email,senha);
+		//mudar o id fora do construtor
+		controller.atualizar(usuario);
+		System.out.println("atualizado com sucesso: " + usuario.toString());
+		
+		}catch(BusinessException e) {
+			System.out.println("❌ Erro na atualização: Tente novamente. " + e.getMessage());
+		
+		}catch(RuntimeException e) {
+			System.out.println("❌ Usuario não encontrado");
+		}
+	}
+	public void menu() {
+
+	    int opcao;
+
+	    do {
+	        System.out.println("\n=== MENU ===");
+	        System.out.println("1 - Cadastrar usuário");
+	        System.out.println("2 - Atualizar usuário");
+	        System.out.println("0 - Sair");
+	        System.out.print("Escolha: ");
+
+	        opcao = sc.nextInt();
+	        sc.nextLine();
+
+	        switch (opcao) {
+
+	            case 1:
+	                cadastrar();
+	                break;
+
+	            case 2:
+	                atualizarNoBanco();
+	                break;
+
+	            case 0:
+	                System.out.println("Encerrando...");
+	                break;
+
+	            default:
+	                System.out.println("Opção inválida.");
+	        }
+
+	    } while (opcao != 0);
+	}
 }
 
 

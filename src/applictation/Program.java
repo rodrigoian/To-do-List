@@ -19,7 +19,7 @@ public class Program {
 		UsuarioController controller = new UsuarioController(service);
 		UsuarioView view = new UsuarioView(sc,controller);
 	
-		view.cadastrar();
+		view.menu();
 		
 		
 		

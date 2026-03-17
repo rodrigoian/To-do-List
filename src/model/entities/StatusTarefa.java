@@ -1,19 +1,19 @@
 package model.entities;
 
 public class StatusTarefa {
-	private long id;
+	private Long id;
 	private String nome;
 	
 	public StatusTarefa() {}
 	
-	public StatusTarefa(long id, String nome) {
+	public StatusTarefa(Long id, String nome) {
 		this.id = id;
 		this.nome = nome;
 	}
 	public long getId() {
 		return id;
 	}
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	public String getNome() {

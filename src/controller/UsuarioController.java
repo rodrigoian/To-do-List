@@ -13,4 +13,8 @@ public class UsuarioController {
 	public void cadastrar(Usuario usuario) {
 	service.cadastrar(usuario);
 	}
+	
+	public void atualizar(Usuario usuario) {
+		service.atualizar(usuario);
+		}
 }

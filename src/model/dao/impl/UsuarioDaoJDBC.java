@@ -45,7 +45,7 @@ public class UsuarioDaoJDBC implements UsuarioDao{
 				if(rs.next()) {
 					//pegar o valor do id gerado na posição 1, pois
 					//vai ser a primeira coluna do .getGeneratedKeys();
-					int id = rs.getInt(1);
+					Long id = rs.getLong(1);
 					//atribui o id gerado dentro do objeto seller
 					obj.setId(id);
 				}
@@ -66,12 +66,21 @@ public class UsuarioDaoJDBC implements UsuarioDao{
 		try {
 			st = conn.prepareStatement(
 					"UPDATE cadastro.usuario "
-					+ "SET (nome_usuario, email, senha) "
-				+ "VALUES (?,?,?)");
+					           + "SET nome_usuario = ?, email = ?, senha = ? "
+					           + "WHERE id_usuario = ?");
 			
 			st.setString(1,obj.getNome());
 			st.setString(2, obj.getEmail());
 			st.setString(3, obj.getSenha());
+			st.setLong(4,obj.getId());
+			
+			int rowsAffected = st.executeUpdate();
+			
+			//para validar se realmente aconteceu o update
+			if (rowsAffected == 0) {
+				throw new DbException("Usuario não encontrado");
+			}
+			
 			
 		} catch(SQLException e) {
 				throw new DbException(e.getMessage());
