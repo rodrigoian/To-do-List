@@ -5,19 +5,34 @@ private Long id;
 private String nome;
 private String email;
 private String senha;
+private String cpf;
 
-// ✅ criar novo usuário (sem id)
-public Usuario(String nome, String email, String senha) {
+
+public Usuario() {
+}
+
+public Usuario(String nome, String email, String senha, String cpf) {
     this.nome = nome;
     this.email = email;
     this.senha = senha;
+    this.cpf = cpf;
+    
 }
 
-public Usuario(Long id, String nome, String email, String senha) {
+public Usuario(Long id, String nome, String email, String senha, String cpf) {
 	this.id = id;
 	this.nome = nome;
 	this.email = email;
-	this.senha = senha;
+	this.cpf = cpf;
+
+}
+
+public String getCpf() {
+	return cpf;
+}
+
+public void setCpf(String cpf) {
+	this.cpf = cpf;
 }
 
 public Long getId() {

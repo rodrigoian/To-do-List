@@ -14,8 +14,10 @@ public class UsuarioController {
 	service.cadastrar(usuario);
 	}
 	
-	public void atualizar(Usuario usuario) {
-		service.atualizar(usuario);
+	public Usuario atualizar(String cpf ,String email, String senha) {
+		return service.atualizar(cpf,email,senha);
+		
+		
 		}
 	
 	public void deletar(Long id) {

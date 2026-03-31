@@ -29,31 +29,42 @@ public class UsuarioDaoJDBC implements UsuarioDao{
 		try {
 			st = conn.prepareStatement(
 					"INSERT INTO cadastro.usuario "
-					+ "(nome_usuario, email, senha) "
-				+ "VALUES (?,?,?)",
+					+ "(nome_usuario, email, senha, cpf) "
+				+ "VALUES (?,?,?,?)",
 					Statement.RETURN_GENERATED_KEYS); //precisa disso para cadastrar o id no sistema java
 			
 			st.setString(1,obj.getNome());
 			st.setString(2, obj.getEmail());
 			st.setString(3, obj.getSenha());
+			st.setString(4, obj.getCpf());
+		
 			
 			int rowsAffected = st.executeUpdate();
 			if (rowsAffected > 0) {
 				
-				//salva o id novo do vendedor
+				//salva o id novo 
 				ResultSet rs = st.getGeneratedKeys();
 				
 				if(rs.next()) {
 					//pegar o valor do id gerado na posição 1, pois
-					//vai ser a primeira coluna do .getGeneratedKeys();
+					//vai ser a primeira coluna da tabela
 					Long id = rs.getLong(1);
-					//atribui o id gerado dentro do objeto seller
+					//atribui o id gerado dentro do objeto
 					obj.setId(id);
 				}
 				DB.closeResultSet(rs);
 		}
 		}
 		catch(SQLException e) {
+			//checa se email ou cpf já existem no banco pelo erro que ele dá
+			
+			 if (e.getMessage().contains("email")) {
+			        throw new DbIntegrityException("Email já cadastrado.");
+			    }
+
+			    if (e.getMessage().contains("cpf")) {
+			        throw new DbIntegrityException("CPF já cadastrado.");
+			    }
 			throw new DbException(e.getMessage());
 		}
 		finally {
@@ -67,7 +78,7 @@ public class UsuarioDaoJDBC implements UsuarioDao{
 		try {
 			st = conn.prepareStatement(
 					"UPDATE cadastro.usuario "
-					           + "SET nome_usuario = ?, email = ?, senha = ? "
+					           + "SET email = ?, senha = ? "
 					           + "WHERE id_usuario = ?");
 			
 			st.setString(1,obj.getNome());
@@ -114,15 +125,46 @@ public class UsuarioDaoJDBC implements UsuarioDao{
 	}
 
 	@Override
-	public Usuario findById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+	public Usuario findByCPF(String cpf) {
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			st = conn.prepareStatement(
+					"SELECT * FROM usuario "
+					+ "WHERE cpf = ?");
+			
+			st.setString(1,cpf);
+			rs = st.executeQuery();
+			
+			//checa pra ver se veio resultado da query
+			if(rs.next()) {
+				Usuario usuario = new Usuario();
+	            usuario.setId(rs.getLong("id")); // Ajuste o nome da coluna de ID conforme seu banco
+	            usuario.setNome(rs.getString("nome"));
+	            usuario.setEmail(rs.getString("email"));
+	            usuario.setSenha(rs.getString("senha"));
+	            usuario.setCpf(rs.getString("cpf"));
+	            
+	            return usuario; // Retorna o usuário preenchido
+			} else {
+				throw new DbException("Usuario não encontrado");
+			}
+		
+		} catch (SQLException e) {
+		throw new DbException(e.getMessage());
+		}
+	finally {
+		DB.closeStatemente(st);
+		DB.closeResultSet(rs);
+	}	
 	}
 
 	@Override
 	public List<Usuario> findAll() {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
-}
+
+	}
+

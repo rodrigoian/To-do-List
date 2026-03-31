@@ -9,8 +9,7 @@ public interface UsuarioDao {
 	void insert(Usuario obj);
 	void update(Usuario obj);
 	void deleteById(Long id);
-	Usuario findById(Long id);
+	Usuario findByCPF(String cpf);
 	List<Usuario> findAll();
-	
 
 }

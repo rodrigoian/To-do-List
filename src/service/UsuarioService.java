@@ -15,42 +15,31 @@ public class UsuarioService {
 	public void cadastrar(Usuario usuario) {
 		//verifica se os campos não estão vazios
 		validarCampoVazio(usuario);
+		
 		validarSenha(usuario.getSenha());
 		
 		dao.insert(usuario);
 	}
 	
-	public void atualizar(Usuario usuario) {
-		//validação de campos vazios
-		validarCampoVazio(usuario);
-		validarSenha(usuario.getSenha());
-		dao.update(usuario);
+	public Usuario atualizar(String cpf,String email, String senha) {
+		//ele me entrega o usuario retornado da consulta
+		Usuario usuarioexistente = dao.findByCPF(cpf);
+		
+		validarCampoVazio(usuarioexistente);
+		
+		validarSenha(usuarioexistente.getSenha());
+		
+		dao.update(usuarioexistente);
+		
+		return usuarioexistente;
 	}
 	public void deletar(Long id) {
 		if (id == null) {
 			throw new CampoVazioException("Erro: Campos Vazios!");
 		}
+		
 		dao.deleteById(id);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	private void validarSenha(String senha) {
@@ -66,14 +55,13 @@ public class UsuarioService {
 		}
 	
 	private void validarCampoVazio(Usuario usuario) {
-		if (usuario.getId() == null || 
+		if ( 
 		        usuario.getNome() == null || usuario.getNome().isBlank() ||
 		        usuario.getEmail() == null || usuario.getEmail().isBlank() ||
 		        usuario.getSenha() == null || usuario.getSenha().isBlank() )
 			throw new CampoVazioException("Erro: Campos vazios");{
 		}
 	}
-	
 		
 	}
 	
